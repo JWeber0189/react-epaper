@@ -7,7 +7,7 @@ import EPAPER from './Epaper';
 ReactDOM.render(
     <div id="big-container">
       <NavLayer />
-      <EPAPER src="/images/WFV_Info_2-2020_web.pdf" length="44" />
+      <EPAPER src="/path_to_your_pdf.pdf" length="100" />
     </div>,
   document.getElementById('root')
 );

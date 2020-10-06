@@ -1,0 +1,203 @@
+:root {
+    --animation-duration: 750ms;
+    --page-shadow-offset: 87%;
+    --page-shadow-depth: 0.25;
+
+    // --page-width: 512px;
+}
+
+body {
+    background-color: darkslategray;
+    color: white;
+}
+
+.epaper-wrapper {
+    overflow: hidden;
+    position: relative;
+}
+
+.epaper-container {
+    display: flex;
+    min-height: 100vh;
+    width: 100%;
+}
+
+.epaper-frame {
+    margin: auto;
+    display: flex;
+    position: relative;
+}
+
+.epaper-controls {
+    margin: auto;
+    padding: 2rem;
+    transition: all 0.3s;
+    opacity: 0.7;
+    cursor: pointer;
+
+    &.hidden {
+        display: none;
+    }
+
+    .turned {
+        transform: rotate(180deg);
+    }
+}
+.epaper-controls:hover {
+    transform: scale(1.05);
+    opacity: 1;
+}
+
+.epaper-overlay {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    // z-index: -5;
+    z-index: 5;
+}
+
+.epaper-list {
+    display: grid;
+    list-style: none;
+    margin: auto;
+    padding: 0;
+    grid-template-columns: 50% 50%;
+    justify-items: center;
+    transition: all calc(var(--animation-duration)/1) ease-in-out;
+    &.pos-center {
+        grid-template-columns: 0% 100%;
+    }
+}
+
+.s0, .s1 {
+    grid-row: 1;
+    z-index: 2;
+    // transition: all 0.5s;
+}
+
+.s0 {
+    grid-column: 1;
+    &::before {
+        content: "";
+        display: block; 
+        width: 100%;
+        height: 100%;
+        position: absolute;
+
+        background: rgb(0,21,59);
+        background: -moz-linear-gradient(90deg, rgba(0,21,59,0) var(--page-shadow-offset), rgba(0,0,0,var(--page-shadow-depth)) 100%);
+        background: -webkit-linear-gradient(90deg, rgba(0,21,59,0) var(--page-shadow-offset), rgba(0,0,0,var(--page-shadow-depth)) 100%);
+        background: linear-gradient(90deg, rgba(0,21,59,0) var(--page-shadow-offset), rgba(0,0,0,var(--page-shadow-depth)) 100%);
+        filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#00153b",endColorstr="#000000",GradientType=1);
+    }
+}
+.s1 {
+    grid-column: 2;
+    &::before {
+        content: "";
+        display: block; 
+        width: 100%;
+        height: 100%;
+        position: absolute;
+
+        background: rgb(0,21,59);
+        background: -moz-linear-gradient(-90deg, rgba(0,21,59,0) var(--page-shadow-offset), rgba(0,0,0,var(--page-shadow-depth)) 100%);
+        background: -webkit-linear-gradient(-90deg, rgba(0,21,59,0) var(--page-shadow-offset), rgba(0,0,0,var(--page-shadow-depth)) 100%);
+        background: linear-gradient(-90deg, rgba(0,21,59,0) var(--page-shadow-offset), rgba(0,0,0,var(--page-shadow-depth)) 100%);
+        filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#00153b",endColorstr="#000000",GradientType=1);
+    }
+
+}
+
+
+@keyframes s1-out-forward {
+    0% {
+        transform: translateX(0) scaleX(1);
+    }
+    50% {
+        transform: translateX(-50%) scaleX(0);
+    }
+    100% {
+        transform: translateX(-50%) scaleX(0);
+    }
+}
+@keyframes s0-in-forward {
+    0% {
+        transform: translateX(50%) scaleX(0);
+    }
+    50% {
+        transform: translateX(50%) scaleX(0);
+    }
+    100% {
+        transform: translateX(0) scaleX(1);
+    }
+}
+
+@keyframes s0-out-backwards {
+    0% {
+        transform: translateX(0) scaleX(1);
+    }
+    50% {
+        transform: translateX(50%) scaleX(0);
+    }
+    100% {
+        transform: translateX(50%) scaleX(0);
+    }
+}
+@keyframes s1-in-backwards {
+    0% {
+        transform: translateX(-50%) scaleX(0);
+    }
+    50% {
+        transform: translateX(-50%) scaleX(0);
+    }
+    100% {
+        transform: translateX(0) scaleX(1);
+    }
+}
+
+.dir-forwards {
+    .pageview-enter-active {
+        &.s0 {
+            animation-name: s0-in-forward;
+            animation-duration: var(--animation-duration);
+            animation-timing-function: ease-out;
+            z-index: 3;
+        }
+    }
+    .pageview-leave-active {
+        &.s1, &.s1::before {
+            animation-name: s1-out-forward;
+            animation-duration: var(--animation-duration);
+            animation-timing-function: ease-in;
+        }
+    }
+}
+
+.dir-backwards {
+    .pageview-enter-active {
+        &.s1, &.s1::before {
+            animation-name: s1-in-backwards;
+            animation-duration: var(--animation-duration);
+            animation-timing-function: ease-out;
+            z-index: 3;
+        }
+    }
+
+    .pageview-leave-active {
+        &.s0, &.s0::before {
+            animation-name: s0-out-backwards;
+            animation-duration: var(--animation-duration);
+            animation-timing-function: ease-in;
+        }
+    }
+}
+
+
+.react-transform-element {
+    transition: scale 0.4s ease-out;
+}
+
+.react-pdf__Page__canvas, .react-pdf__Page__textContent {
+    transition: all 0.3s;
+}

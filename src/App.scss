@@ -1,0 +1,48 @@
+:root {
+  --nav-size: 5rem;
+}
+
+
+.navbar {
+  // height: var(--nav-size);
+  position: absolute;
+  z-index: 6;
+
+  ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    height: 100%;
+
+    .nav-item {
+      margin: 2rem;
+      height: calc(var(--nav-size) * 0.75);
+      min-width: calc(var(--nav-size) * 0.75);
+      display: flex;
+      border-style: solid;
+      border-radius: 5rem;
+      border-width: 2px;
+      cursor: pointer;
+      transition: all 0.3s;
+      opacity: 0.7;
+
+      .control-container {
+        display: flex;
+        width: 100%;
+      }
+
+      &:hover {
+        transform: scale(1.05);
+        opacity: 1;
+      }
+
+      img {
+        margin: auto;
+        width: 33px;
+      }
+    }
+  }
+}
